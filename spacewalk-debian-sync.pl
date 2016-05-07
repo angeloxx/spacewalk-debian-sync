@@ -13,6 +13,7 @@
 # 20130204 - Initial release
 # 20130215 - Fix for downloading security repository
 # 20130216 - Fix for downloading from snapshot.debian.org
+# 20160507 - (angeloxx) Support for other third party repos (ie dotdeb)
 #
 # Here are some sample URLs:
 #
@@ -83,6 +84,15 @@ if ($url =~ /(.*\d{8}T\d{6}Z\/)/) {
   &info("Repo URL: $url\n");
   &info("Debian root is $debianroot\n");
 }
+
+if (not(defined($debianroot))) {
+  if ($url =~ /(.*)\/dists/) {
+    $debianroot = $1;
+    &info("Repo URL: $url\n");
+    &info("Debian root is $debianroot\n");
+  }
+}
+
 
 # Abort if we don't know the root
 if (not(defined($debianroot))) {
